@@ -19,5 +19,18 @@ namespace ShopOnline.Web.Pages
 
         public IEnumerable<IEnumerable<ProductDto>> GetProductRows() => 
             ProductList.Chunk(ItemsPerRow);
+
+        public IEnumerable<IEnumerable<ProductDto>> GetGroupedProductRows()
+        {
+            var productGroups = from product in ProductList
+                   group product by product.CategoryId into productGroup
+                   orderby productGroup.Key
+                   select productGroup;
+            foreach (var group in productGroups)
+            {
+                foreach (var chunk in group.Chunk(ItemsPerRow))
+                    yield return chunk;
+            }
+        }
     }
 }
