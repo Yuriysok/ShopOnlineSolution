@@ -1,0 +1,20 @@
+﻿@page "/"
+
+
+@if (ProductList == null)
+{
+    <h3>Loading products...</h3>
+}
+else
+{
+    <h3>Products</h3>
+    @foreach (var productRow in GetProductRows())
+    {
+        <div class="row mt-3">
+            @foreach (var product in productRow)
+            {
+                <ProductCard Product="@product"></ProductCard>
+            }
+        </div>
+    }
+}
